@@ -37,7 +37,7 @@ jobs:
           echo "Bucket exists."
         else
           echo "Bucket does not exist. Stopping the pipeline."
-          exit 0
+          exit 1
         fi
       env:
         AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
@@ -46,6 +46,6 @@ jobs:
       if: success() # utilisée pour s'assurer que le déploiement vers AWS S3 ne se produit que si toutes les étapes précédentes du workflow se sont terminées avec succès. Cela permet d'éviter de déployer des modifications potentiellement invalides ou incomplètes.
       run: |
         ls -la
-        aws s3 sync . s3://${{ secrets.AWS_BUCKET_NAME }} --delete --exclude ".git/*" --exclude ".github/*"
+        aws isimsy sync . isimsy://${{ secrets.AWS_BUCKET_NAME }} --delete --exclude ".git/*" --exclude ".github/*"
       env:
         AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
